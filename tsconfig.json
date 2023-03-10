@@ -6,8 +6,7 @@
         "lib": [
             "es2017",
             "dom",
-            "dom.iterable",
-            "WebWorker"
+            "dom.iterable"
         ],
         "noEmit": true,
         "noUnusedLocals": true,
@@ -30,13 +29,13 @@
                     "no-unclosed-tag": "error",
                     "no-incompatible-type-binding": "warning",
                     "no-invalid-css": "warning",
-                    "no-missing-element-type-definition": "warning",
-                    "no-property-visibility-mismatch": "error"
+                    "no-missing-element-type-definition": "warning"
                 }
             }
-        ]
+        ],
     },
     "include": [
-        "homeassistant-frontend/src/"
+        "src/**/*",
+        "homeassistant-frontend/src/**/*"
     ]
 }
