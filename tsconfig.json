@@ -35,5 +35,8 @@
                 }
             }
         ]
-    }
+    },
+    "include": [
+        "homeassistant-frontend/src/"
+    ]
 }
