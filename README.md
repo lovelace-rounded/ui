@@ -5,6 +5,8 @@
 ![downloads][downloads-badge]
 ![build][build-badge]
 
+![Overview](./docs/preview.png)
+
 ## What is Rounded ?
 
 Rounded is a collection of cards for [Home Assistant][home-assistant] Dashboard UI.
@@ -58,8 +60,8 @@ All the Rounded cards can be configured using Dashboard UI editor.
 
 ## Credits
 
-The design is inspired by [LE0N][leon]
-The codebase is inspired by [Mushroom][mushroom]
+* The design is inspired by [LE0N][leon]
+* The codebase is inspired by [Mushroom][mushroom]
 
 <!-- Badges -->
 
