@@ -1,0 +1,6 @@
+title: Rounded Showcase
+views:
+  - !include views/home.yaml
+  - !include views/vacuum.yaml
+  - !include views/television.yaml
+  - !include views/speaker.yaml

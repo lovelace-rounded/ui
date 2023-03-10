@@ -1,0 +1,8 @@
+  mode: storage
+  dashboards:
+    lovelace-showcase:
+      mode: yaml
+      title: Showcase
+      icon: mdi:rounded-corner
+      show_in_sidebar: true
+      filename: lovelace-showcase.yaml
