@@ -37,5 +37,8 @@
     "include": [
         "src/**/*",
         "homeassistant-frontend/src/**/*"
+    ],
+    "exclude": [
+        "node_modules/**"
     ]
 }
