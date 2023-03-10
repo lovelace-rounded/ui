@@ -10,8 +10,15 @@ import {
   LovelaceCardEditor,
 } from "../../../homeassistant-frontend/src/panels/lovelace/types";
 import { HomeAssistant } from "../../../homeassistant-frontend/src/types";
+import { registerCustomCard } from "../../utils/register-card";
 import { TITLE_CARD_EDITOR_NAME, TITLE_CARD_NAME } from "./const";
 import { TitleCardConfig } from "./title-card-config";
+
+registerCustomCard({
+  name: "Rounded title card",
+  type: TITLE_CARD_NAME,
+  description: "Card with title and entity chip sub section",
+});
 
 @customElement(TITLE_CARD_NAME)
 export class TitleCard extends LitElement implements LovelaceCard {
@@ -139,11 +146,5 @@ export class TitleCard extends LitElement implements LovelaceCard {
         color: var(--contract20);
       }
     `;
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    "rounded-title-card": TitleCard;
   }
 }

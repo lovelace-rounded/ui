@@ -88,9 +88,3 @@ export class TitleCardEditor extends LitElement implements LovelaceCardEditor {
     ];
   }
 }
-
-declare global {
-  interface HTMLElementTagNameMap {
-    "rounded-title-card-editor": TitleCardEditor;
-  }
-}
