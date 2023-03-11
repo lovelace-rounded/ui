@@ -1,6 +1,6 @@
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import { CSSResultGroup, html, LitElement, nothing, css } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators";
 import {
   RenderTemplateResult,
   subscribeRenderTemplate,
@@ -50,10 +50,7 @@ export class TitleCard extends LitElement implements LovelaceCard {
 
   public setConfig(config: TitleCardConfig): void {
     this._config = {
-      title_tap_action: {
-        action: "none",
-      },
-      subtitle_tap_action: {
+      tap_action: {
         action: "none",
       },
       ...config,
