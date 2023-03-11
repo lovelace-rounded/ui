@@ -13,7 +13,7 @@ git submodule update --init --recursive --remote
 
 echo "============= 📦 Python requirements 📦 ============="
 pip install -r requirements_dev.txt
-pre-commit install --install-hooks
+pre-commit install --install-hooks --hook-type commit-msg
 
 echo "============= 📦 Pnpm install 📦 ============="
 cd "homeassistant-frontend/" && pnpm install
