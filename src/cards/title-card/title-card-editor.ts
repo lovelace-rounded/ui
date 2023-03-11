@@ -1,30 +1,31 @@
 import { assert } from "superstruct";
-import { css, html, LitElement, nothing } from "lit";
-import { customElement, property, state } from "lit/decorators";
+import { html, nothing } from "lit";
+import { customElement, state } from "lit/decorators";
 import { TITLE_CARD_EDITOR_NAME } from "./const";
 import { TitleCardConfig, titleCardConfigStruct } from "./title-card-config";
-import { fireEvent, HomeAssistant, LovelaceCardEditor } from "../../ha";
+import { fireEvent, LovelaceCardEditor } from "../../ha";
 import memoizeOne from "memoize-one";
 import { HaFormSchema } from "../../utils/form/ha-form";
 import setupCustomlocalize from "../../localize";
 import { GENERIC_LABELS } from "../../utils/form/generic-fields";
+import { computeActionsFormSchema } from "../../shared/config/actions-config";
+import { loadHaComponents } from "../../utils/loader";
+import { RoundedBaseElement } from "../../utils/base-element";
 
 const computeSchema = memoizeOne((): HaFormSchema[] => [
     { name: "title", required: true, selector: { template: {} } },
-    { name: "color", selector: { "mush-color": {} } },
-    {
-        name: "tap_action",
-        selector: {
-            "ui-action": {},
-        },
-    },
+    { name: "text_color", selector: { "rounded-color": {} } },
+    ...computeActionsFormSchema(),
 ]);
 
 @customElement(TITLE_CARD_EDITOR_NAME)
-export class TitleCardEditor extends LitElement implements LovelaceCardEditor {
-    @property({ attribute: false }) public hass?: HomeAssistant;
-
+export class TitleCardEditor extends RoundedBaseElement implements LovelaceCardEditor {
     @state() private _config?: TitleCardConfig;
+
+    connectedCallback() {
+        super.connectedCallback();
+        void loadHaComponents();
+    }
 
     public setConfig(config: TitleCardConfig): void {
         assert(config, titleCardConfigStruct);
@@ -59,20 +60,5 @@ export class TitleCardEditor extends LitElement implements LovelaceCardEditor {
             .computeLabel=${this._computeLabel}
             @value-changed=${this._valueChanged}
         ></ha-form>`;
-    }
-
-    static get styles() {
-        return [
-            css`
-                .container {
-                    display: flex;
-                    flex-direction: column;
-                }
-                ha-form {
-                    display: block;
-                    margin-bottom: 24px;
-                }
-            `,
-        ];
     }
 }

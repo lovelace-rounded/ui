@@ -6,7 +6,7 @@ import { lovelaceCardConfigStruct } from "../../shared/config/lovelace-card-conf
 export type TitleCardConfig = LovelaceCardConfig &
     ActionsSharedConfig & {
         title: string;
-        color?: string;
+        text_color?: string;
     };
 
 export const titleCardConfigStruct = assign(
@@ -14,6 +14,6 @@ export const titleCardConfigStruct = assign(
     actionsSharedConfigStruct,
     object({
         title: string(),
-        color: optional(string()),
+        text_color: optional(string()),
     })
 );

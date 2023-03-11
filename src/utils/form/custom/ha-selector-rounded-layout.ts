@@ -4,10 +4,10 @@ import { fireEvent, HomeAssistant } from "../../../ha";
 import "../../../shared/editor/layout-picker";
 
 export type RoundedLayoutSelector = {
-    "mush-layout": {};
+    "rounded-layout": {};
 };
 
-@customElement("ha-selector-mush-layout")
+@customElement("ha-selector-rounded-layout")
 export class HaRoundedLayoutSelector extends LitElement {
     @property() public hass!: HomeAssistant;
 

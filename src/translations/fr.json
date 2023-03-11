@@ -36,16 +36,11 @@
         },
         "card": {
             "generic": {
+                "text_color": "Couleur du texte",
+                "background_color": "Couleur de l'arrière plan",
                 "icon_color": "Couleur de l'icône",
-                "layout": "Disposition",
-                "fill_container": "Remplir le conteneur",
                 "primary_info": "Information principale",
-                "secondary_info": "Information secondaire",
-                "icon_type": "Type d'icône",
-                "content_info": "Contenu",
-                "use_entity_picture": "Utiliser l'image de l'entité ?",
-                "collapsible_controls": "Reduire les contrôles quand éteint",
-                "icon_animation": "Animation de l'icône ?"
+                "secondary_info": "Information secondaire"
             }
         }
     },

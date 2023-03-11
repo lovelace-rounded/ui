@@ -12,12 +12,13 @@ import babelDecorators from "@babel/plugin-proposal-decorators";
 import babelClassProperties from "@babel/plugin-proposal-class-properties";
 
 const IGNORED_FILES = [
+    "@material/mwc-notched-outline/mwc-notched-outline.js",
     "@material/mwc-ripple/mwc-ripple.js",
+    "@material/mwc-list/mwc-list.js",
+    "@material/mwc-list/mwc-list-item.js",
+    "@material/mwc-menu/mwc-menu.js",
+    "@material/mwc-menu/mwc-menu-surface.js",
     "@material/mwc-icon/mwc-icon.js",
-    // "@material/mwc-list/mwc-list.js",
-    // "@material/mwc-list/mwc-list-item.js",
-    // "@material/mwc-menu/mwc-menu.js",
-    // "@material/mwc-menu/mwc-menu-surface.js",
 ];
 
 const extensions = [".js", ".ts"];
@@ -35,9 +36,9 @@ const serveOptions = {
 };
 
 const plugins = [
-    // ignore({
-    //     files: IGNORED_FILES.map((file) => require.resolve(file)),
-    // }),
+    ignore({
+        files: IGNORED_FILES.map((file) => require.resolve(file)),
+    }),
     alias({
         entries: [
             { find: /^lit\/decorators$/, replacement: "lit/decorators.js" },

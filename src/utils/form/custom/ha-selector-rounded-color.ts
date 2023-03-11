@@ -4,10 +4,10 @@ import { fireEvent, HomeAssistant } from "../../../ha";
 import "../../../shared/editor/color-picker";
 
 export type RoundedColorSelector = {
-    "mush-color": {};
+    "rounded-color": {};
 };
 
-@customElement("ha-selector-mush-color")
+@customElement("ha-selector-rounded-color")
 export class HaRoundedColorSelector extends LitElement {
     @property() public hass!: HomeAssistant;
 

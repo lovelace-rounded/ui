@@ -1,11 +1,14 @@
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
-import { CSSResultGroup, html, LitElement, nothing, css } from "lit";
-import { customElement, property, state } from "lit/decorators";
+import { CSSResultGroup, html, nothing, css } from "lit";
+import { customElement, state } from "lit/decorators";
 import { TITLE_CARD_EDITOR_NAME, TITLE_CARD_NAME } from "./const";
 import { TitleCardConfig } from "./title-card-config";
 import { RenderTemplateResult, subscribeRenderTemplate } from "../../ha/data/ws-templates";
 import { registerCustomCard } from "../../utils/custom-cards";
 import { HomeAssistant, LovelaceCard, LovelaceCardEditor } from "../../ha";
+import { RoundedBaseElement } from "../../utils/base-element";
+import { computeRgbColor } from "../../utils/colors";
+import { styleMap } from "lit/directives/style-map";
 
 registerCustomCard({
     name: "Rounded title card",
@@ -14,9 +17,7 @@ registerCustomCard({
 });
 
 @customElement(TITLE_CARD_NAME)
-export class TitleCard extends LitElement implements LovelaceCard {
-    @property({ attribute: false }) public hass?: HomeAssistant;
-
+export class TitleCard extends RoundedBaseElement implements LovelaceCard {
     @state() private _config?: TitleCardConfig;
 
     @state() private _templateResult?: RenderTemplateResult;
@@ -42,7 +43,10 @@ export class TitleCard extends LitElement implements LovelaceCard {
     public setConfig(config: TitleCardConfig): void {
         this._config = {
             tap_action: {
-                action: "none",
+                action: "more-info",
+            },
+            hold_action: {
+                action: "more-info",
             },
             ...config,
         };
@@ -109,26 +113,38 @@ export class TitleCard extends LitElement implements LovelaceCard {
             return nothing;
         }
 
+        const textStyle = {};
+
+        if (this._config.text_color) {
+            const textRgbColor = computeRgbColor(this._config.text_color);
+            textStyle["--text-color"] = `rgb(${textRgbColor})`;
+        } else {
+            textStyle["--text-color"] = `var(--contract20)`;
+        }
+
         return html` <ha-card>
-            <h1 class="title">${this._templateResult?.result}</h1>
+            <h1 class="title" style=${styleMap(textStyle)}>${this._templateResult?.result}</h1>
         </ha-card>`;
     }
 
     static get styles(): CSSResultGroup {
-        return css`
-            ha-card {
-                height: 100%;
-                background: none;
-                text-align: center;
-                padding: var(--grid-card-gap) 0px;
-                --mdc-ripple-press-opacity: 0;
-                display: block;
-            }
+        return [
+            super.styles,
+            css`
+                ha-card {
+                    height: 100%;
+                    background: none;
+                    text-align: center;
+                    padding: var(--grid-card-gap) 0px;
+                    --mdc-ripple-press-opacity: 0;
+                    display: block;
+                }
 
-            div.title {
-                font-size: 32px;
-                color: var(--contract20);
-            }
-        `;
+                div.title {
+                    font-size: 32px;
+                    --text-color: rgb(var(--contract20));
+                }
+            `,
+        ];
     }
 }

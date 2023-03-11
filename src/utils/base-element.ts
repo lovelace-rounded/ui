@@ -33,9 +33,11 @@ export class RoundedBaseElement extends LitElement {
             :host {
                 ${defaultColorCss}
             }
+
             :host([dark-mode]) {
                 ${defaultDarkColorCss}
             }
+
             :host {
                 ${themeColorCss}
                 ${themeVariables}

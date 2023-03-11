@@ -4,10 +4,10 @@ import { customElement, property } from "lit/decorators.js";
 import "../../../shared/editor/icon-type-picker";
 
 export type RoundedIconTypeSelector = {
-    "mush-icon-type": {};
+    "rounded-icon-type": {};
 };
 
-@customElement("ha-selector-mush-icon-type")
+@customElement("ha-selector-rounded-icon-type")
 export class HaRoundedIconTypeSelector extends LitElement {
     @property() public hass!: HomeAssistant;
 

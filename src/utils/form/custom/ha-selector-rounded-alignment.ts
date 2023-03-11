@@ -4,10 +4,10 @@ import { fireEvent, HomeAssistant } from "../../../ha";
 import "../../../shared/editor/alignment-picker";
 
 export type RoundedAlignementSelector = {
-    "mush-alignment": {};
+    "rounded-alignment": {};
 };
 
-@customElement("ha-selector-mush-alignment")
+@customElement("ha-selector-rounded-alignment")
 export class HaRoundedAlignmentSelector extends LitElement {
     @property() public hass!: HomeAssistant;
 

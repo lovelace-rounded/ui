@@ -36,15 +36,11 @@
         },
         "card": {
             "generic": {
+                "text_color": "Text color",
+                "background_color": "Background color",
                 "icon_color": "Icon color",
-                "fill_container": "Fill container",
                 "primary_info": "Primary information",
-                "secondary_info": "Secondary information",
-                "icon_type": "Icon type",
-                "content_info": "Content",
-                "use_entity_picture": "Use entity picture?",
-                "collapsible_controls": "Collapse controls when off",
-                "icon_animation": "Animate icon when active?"
+                "secondary_info": "Secondary information"
             }
         }
     },
