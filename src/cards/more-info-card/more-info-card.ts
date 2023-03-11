@@ -1,5 +1,5 @@
-import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { css, CSSResultGroup, html, nothing } from "lit";
+import { customElement, state } from "lit/decorators.js";
 import {
     actionHandler,
     ActionHandlerEvent,
@@ -10,6 +10,7 @@ import {
     LovelaceCardEditor,
 } from "../../ha";
 import setupCustomlocalize from "../../localize";
+import { RoundedBaseElement } from "../../utils/base-element";
 import { registerCustomCard } from "../../utils/custom-cards";
 import { MORE_INFO_CARD_EDITOR_NAME, MORE_INFO_CARD_NAME } from "./const";
 import { MoreInfoCardConfig } from "./more-info-card-config";
@@ -21,9 +22,7 @@ registerCustomCard({
 });
 
 @customElement(MORE_INFO_CARD_NAME)
-export class MoreInfoCard extends LitElement implements LovelaceCard {
-    @property({ attribute: false }) public hass?: HomeAssistant;
-
+export class MoreInfoCard extends RoundedBaseElement implements LovelaceCard {
     @state() private _config?: MoreInfoCardConfig;
 
     public static async getConfigElement(): Promise<LovelaceCardEditor> {
@@ -76,17 +75,20 @@ export class MoreInfoCard extends LitElement implements LovelaceCard {
     }
 
     static get styles(): CSSResultGroup {
-        return css`
-            ha-card {
-                background: none;
-                border-radius: 24px;
-                color: var(--contrast20);
-                margin-top: 8px;
-                padding: 18px 0px;
-                font-size: 16px;
-                border: 2px solid var(--contrast5);
-                text-align: center;
-            }
-        `;
+        return [
+            super.styles,
+            css`
+                ha-card {
+                    background: none;
+                    border-radius: 24px;
+                    color: var(--contrast20);
+                    margin-top: 8px;
+                    padding: 18px 0px;
+                    font-size: 16px;
+                    border: 2px solid var(--contrast5);
+                    text-align: center;
+                }
+            `,
+        ];
     }
 }

@@ -1,30 +1,23 @@
-import { html, nothing } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { nothing, html } from "lit";
+import { customElement, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import { assert } from "superstruct";
 import { fireEvent, LovelaceCardEditor } from "../../ha";
 import setupCustomlocalize from "../../localize";
-import { computeActionsFormSchema } from "../../shared/config/actions-config";
 import { RoundedBaseElement } from "../../utils/base-element";
 import { GENERIC_LABELS } from "../../utils/form/generic-fields";
 import { HaFormSchema } from "../../utils/form/ha-form";
-import { UiAction } from "../../utils/form/ha-selector";
-import { MORE_INFO_CARD_EDITOR_NAME } from "./const";
-import { MoreInfoCardConfig, moreInfoCardConfigStruct } from "./more-info-card-config";
+import { SCENE_CARD_EDITOR_NAME } from "./const";
+import { SceneCardConfig, sceneCardConfigStruct } from "./scene-card-config";
 
-const actions: UiAction[] = ["more-info", "navigate", "url", "call-service", "none"];
+const computeSchema = memoizeOne((): HaFormSchema[] => []);
 
-const computeSchema = memoizeOne((): HaFormSchema[] => [
-    { name: "entity", selector: { entity: {} } },
-    ...computeActionsFormSchema(actions),
-]);
+customElement(SCENE_CARD_EDITOR_NAME);
+export class SceneCardEditor extends RoundedBaseElement implements LovelaceCardEditor {
+    @state() private _config?: SceneCardConfig;
 
-@customElement(MORE_INFO_CARD_EDITOR_NAME)
-export class MoreInfoCardEditor extends RoundedBaseElement implements LovelaceCardEditor {
-    @state() private _config?: MoreInfoCardConfig;
-
-    public setConfig(config: MoreInfoCardConfig): void {
-        assert(config, moreInfoCardConfigStruct);
+    public setConfig(config: SceneCardConfig): void {
+        assert(config, sceneCardConfigStruct);
         this._config = config;
     }
 
