@@ -7,6 +7,9 @@ import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import serve from "rollup-plugin-serve";
 import ignore from "./rollup-plugins/ignore-plugin.js";
+import babelTypescript from "@babel/preset-typescript";
+import babelDecorators from "@babel/plugin-proposal-decorators";
+import babelClassProperties from "@babel/plugin-proposal-class-properties";
 
 const IGNORED_FILES = [
     "@material/mwc-ripple/mwc-ripple.js",
@@ -16,6 +19,8 @@ const IGNORED_FILES = [
     // "@material/mwc-menu/mwc-menu.js",
     // "@material/mwc-menu/mwc-menu-surface.js",
 ];
+
+const extensions = [".js", ".ts"];
 
 const dev = process.env.ROLLUP_WATCH;
 
@@ -30,9 +35,9 @@ const serveOptions = {
 };
 
 const plugins = [
-    ignore({
-        files: IGNORED_FILES.map((file) => require.resolve(file)),
-    }),
+    // ignore({
+    //     files: IGNORED_FILES.map((file) => require.resolve(file)),
+    // }),
     alias({
         entries: [
             { find: /^lit\/decorators$/, replacement: "lit/decorators.js" },
@@ -54,13 +59,33 @@ const plugins = [
     typescript({
         declaration: false,
     }),
-    nodeResolve(),
-    json(),
+    nodeResolve({
+        extensions: extensions,
+        preferBuiltins: false,
+        browser: true,
+        rootDir: "./src",
+    }),
+    json({
+        compact: true,
+        preferConst: true,
+    }),
     commonjs({
         sourceMap: false,
     }),
     babel({
+        babelrc: false,
+        compact: true,
+        presets: [babelTypescript.default],
         babelHelpers: "bundled",
+        plugins: [
+            "@babel/syntax-dynamic-import",
+            "@babel/plugin-proposal-optional-chaining",
+            "@babel/plugin-proposal-nullish-coalescing-operator",
+            [babelDecorators.default, { decoratorsBeforeExport: true }],
+            [babelClassProperties.default, { loose: true }],
+        ].filter(Boolean),
+        extensions,
+        exclude: [require.resolve("@mdi/js/mdi.js")],
     }),
     ...(dev ? [serve(serveOptions)] : [terser()]),
 ];
@@ -74,14 +99,5 @@ export default [
             inlineDynamicImports: true,
         },
         plugins,
-        moduleContext: (id) => {
-            const thisAsWindowForModules = [
-                "node_modules/@formatjs/intl-utils/lib/src/diff.js",
-                "node_modules/@formatjs/intl-utils/lib/src/resolve-locale.js",
-            ];
-            if (thisAsWindowForModules.some((id_) => id.trimRight().endsWith(id_))) {
-                return "window";
-            }
-        },
     },
 ];
