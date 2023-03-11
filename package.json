@@ -13,11 +13,12 @@
         "format": "prettier --write ."
     },
     "dependencies": {
-        "lit": "2.6.1",
-        "superstruct": "1.0.3",
-        "memoize-one": "6.0.0",
-        "home-assistant-js-websocket": "8.0.1",
-        "@mdi/js": "^7.1.96"
+        "lit": "^2.6.1",
+        "superstruct": "^1.0.3",
+        "memoize-one": "^6.0.0",
+        "home-assistant-js-websocket": "^8.0.1",
+        "@mdi/js": "^7.1.96",
+        "js-yaml": "^4.1.0"
     },
     "devDependencies": {
         "@types/mocha": "^10.0.1",
@@ -41,9 +42,5 @@
         "@rollup/plugin-node-resolve": "^15.0.1",
         "@rollup/plugin-terser": "^0.3.0",
         "@rollup/plugin-typescript": "^11.0.0"
-    },
-    "peerDependencies": {
-        "@material/mwc-ripple": "^0.27.0",
-        "@material/mwc-icon": "^0.27.0"
     }
 }

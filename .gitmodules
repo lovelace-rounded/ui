@@ -1,7 +1,3 @@
-[submodule "homeassistant-frontend"]
-	path = homeassistant-frontend
-	url = https://github.com/home-assistant/frontend.git
-	branch = dev
 [submodule "rounded-theme"]
 	path = rounded-theme
 	url = https://github.com/lovelace-rounded/theme

@@ -33,12 +33,5 @@
                 }
             }
         ],
-    },
-    "include": [
-        "src/**/*.ts",
-        "homeassistant-frontend/src/**/*.ts"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+    }
 }

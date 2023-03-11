@@ -1,90 +1,78 @@
 import { assert } from "superstruct";
 import { css, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
-import { LovelaceCardEditor } from "../../../homeassistant-frontend/src/panels/lovelace/types";
-import { HomeAssistant } from "../../../homeassistant-frontend/src/types";
 import { TITLE_CARD_EDITOR_NAME } from "./const";
 import { TitleCardConfig, titleCardConfigStruct } from "./title-card-config";
-import { configElementStyle } from "../../../homeassistant-frontend/src/panels/lovelace/editor/config-elements/config-elements-style";
-import { SchemaUnion } from "../../../homeassistant-frontend/src/components/ha-form/types";
-import { fireEvent } from "../../../homeassistant-frontend/src/common/dom/fire_event";
+import { fireEvent, HomeAssistant, LovelaceCardEditor } from "../../ha";
+import memoizeOne from "memoize-one";
+import { HaFormSchema } from "../../utils/form/ha-form";
+import setupCustomlocalize from "../../localize";
+import { GENERIC_LABELS } from "../../utils/form/generic-fields";
 
-const SCHEMA = [
-  { name: "title", required: true, selector: { template: {} } },
-  { name: "color", selector: { "ui-color": {} } },
-  {
-    name: "tap_action",
-    selector: {
-      "ui-action": {},
+const computeSchema = memoizeOne((): HaFormSchema[] => [
+    { name: "title", required: true, selector: { template: {} } },
+    { name: "color", selector: { "mush-color": {} } },
+    {
+        name: "tap_action",
+        selector: {
+            "ui-action": {},
+        },
     },
-  },
-] as const;
+]);
 
 @customElement(TITLE_CARD_EDITOR_NAME)
 export class TitleCardEditor extends LitElement implements LovelaceCardEditor {
-  @property({ attribute: false }) public hass?: HomeAssistant;
+    @property({ attribute: false }) public hass?: HomeAssistant;
 
-  @state() private _config?: TitleCardConfig;
+    @state() private _config?: TitleCardConfig;
 
-  public setConfig(config: TitleCardConfig): void {
-    assert(config, titleCardConfigStruct);
-    this._config = config;
-  }
-
-  private _valueChanged(ev: CustomEvent): void {
-    ev.stopPropagation();
-    if (!this._config || !this.hass) {
-      return;
+    public setConfig(config: TitleCardConfig): void {
+        assert(config, titleCardConfigStruct);
+        this._config = config;
     }
 
-    const config: TitleCardConfig = {
-      features: this._config.features,
-      ...ev.detail.value,
+    private _valueChanged(ev: CustomEvent): void {
+        fireEvent(this, "config-changed", { config: ev.detail.value });
+    }
+
+    private _computeLabel = (schema: HaFormSchema) => {
+        const customLocalize = setupCustomlocalize(this.hass!);
+
+        if (GENERIC_LABELS.includes(schema.name)) {
+            return customLocalize(`editor.card.generic.${schema.name}`);
+        }
+
+        return this.hass!.localize(`ui.panel.lovelace.editor.card.generic.${schema.name}`);
     };
-    fireEvent(this, "config-changed", { config });
-  }
 
-  private _computeLabelCallback = (schema: SchemaUnion<typeof SCHEMA>) => {
-    switch (schema.name) {
-      case "color":
-        return this.hass!.localize(
-          `ui.panel.lovelace.editor.card.tile.${schema.name}`
-        );
+    protected render() {
+        if (!this.hass || !this._config) {
+            return nothing;
+        }
 
-      default:
-        return this.hass!.localize(
-          `ui.panel.lovelace.editor.card.generic.${schema.name}`
-        );
-    }
-  };
+        const schema = computeSchema();
 
-  protected render() {
-    if (!this.hass || !this._config) {
-      return nothing;
+        return html`<ha-form
+            .hass=${this.hass}
+            .data=${this._config}
+            .schema=${schema}
+            .computeLabel=${this._computeLabel}
+            @value-changed=${this._valueChanged}
+        ></ha-form>`;
     }
 
-    return html` <ha-form
-      .hass=${this.hass}
-      .data=${this._config}
-      .schema=${SCHEMA}
-      .computeLabel=${this._computeLabelCallback}
-      @value-changed=${this._valueChanged}
-    ></ha-form>`;
-  }
-
-  static get styles() {
-    return [
-      configElementStyle,
-      css`
-        .container {
-          display: flex;
-          flex-direction: column;
-        }
-        ha-form {
-          display: block;
-          margin-bottom: 24px;
-        }
-      `,
-    ];
-  }
+    static get styles() {
+        return [
+            css`
+                .container {
+                    display: flex;
+                    flex-direction: column;
+                }
+                ha-form {
+                    display: block;
+                    margin-bottom: 24px;
+                }
+            `,
+        ];
+    }
 }

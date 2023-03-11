@@ -7,7 +7,6 @@ set -e
 ###################################
 
 echo "============= 📦 Submodules 📦 ============="
-rm -R homeassistant-frontend
 rm -R rounded-theme
 git submodule update --init --recursive --remote
 
@@ -16,5 +15,4 @@ pip install -r requirements_dev.txt
 pre-commit install --install-hooks --hook-type commit-msg
 
 echo "============= 📦 Pnpm install 📦 ============="
-cd "homeassistant-frontend/" && pnpm install
-cd ../ && pnpm install
+pnpm install
