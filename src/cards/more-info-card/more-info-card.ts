@@ -9,6 +9,7 @@ import {
     LovelaceCard,
     LovelaceCardEditor,
 } from "../../ha";
+import setupCustomlocalize from "../../localize";
 import { registerCustomCard } from "../../utils/custom-cards";
 import { MORE_INFO_CARD_EDITOR_NAME, MORE_INFO_CARD_NAME } from "./const";
 import { MoreInfoCardConfig } from "./more-info-card-config";
@@ -59,6 +60,9 @@ export class MoreInfoCard extends LitElement implements LovelaceCard {
         if (!this._config || !this.hass) {
             return nothing;
         }
+        const customLocalize = setupCustomlocalize(this.hass!);
+
+        const textValue = customLocalize(`card.more-info.text`);
 
         return html` <ha-card
             @action=${this._handleAction}
@@ -67,7 +71,7 @@ export class MoreInfoCard extends LitElement implements LovelaceCard {
                 hasDoubleClick: hasAction(this._config.double_tap_action),
             })}
         >
-            More information
+            ${textValue}
         </ha-card>`;
     }
 
