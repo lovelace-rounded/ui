@@ -3,7 +3,7 @@ import { css, html, PropertyValues, TemplateResult } from "lit";
 import { property } from "lit/decorators.js";
 import { TextFieldBase } from "@material/mwc-textfield/mwc-textfield-base";
 
-class MushroomTextField extends TextFieldBase {
+class RoundedTextField extends TextFieldBase {
     @property({ type: Boolean }) public invalid?: boolean;
 
     @property({ attribute: "error-message" }) public errorMessage?: string;
@@ -78,4 +78,4 @@ class MushroomTextField extends TextFieldBase {
     ];
 }
 
-customElements.define("mushroom-textfield", MushroomTextField);
+customElements.define("rounded-textfield", RoundedTextField);

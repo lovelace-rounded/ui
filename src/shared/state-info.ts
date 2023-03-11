@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { property, customElement } from "lit/decorators.js";
 
-@customElement("mushroom-state-info")
+@customElement("rounded-state-info")
 export class StateItem extends LitElement {
     @property() public primary: string = "";
 

@@ -1,20 +1,17 @@
+import { fireEvent, HomeAssistant } from "../../../ha";
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { fireEvent, HomeAssistant } from "../../../ha";
-import "../../../shared/editor/info-picker";
-import { Info } from "../../info";
+import "../../../shared/editor/icon-type-picker";
 
-export type MushInfoSelector = {
-    "mush-info": {
-        infos?: Info[];
-    };
+export type RoundedIconTypeSelector = {
+    "mush-icon-type": {};
 };
 
-@customElement("ha-selector-mush-info")
-export class HaMushInfoSelector extends LitElement {
+@customElement("ha-selector-mush-icon-type")
+export class HaRoundedIconTypeSelector extends LitElement {
     @property() public hass!: HomeAssistant;
 
-    @property() public selector!: MushInfoSelector;
+    @property() public selector!: RoundedIconTypeSelector;
 
     @property() public value?: string;
 
@@ -22,13 +19,12 @@ export class HaMushInfoSelector extends LitElement {
 
     protected render() {
         return html`
-            <mushroom-info-picker
+            <rounded-icon-type-picker
                 .hass=${this.hass}
-                .infos=${this.selector["mush-info"].infos}
                 .label=${this.label}
                 .value=${this.value}
                 @value-changed=${this._valueChanged}
-            ></mushroom-info-picker>
+            ></rounded-icon-type-picker>
         `;
     }
 

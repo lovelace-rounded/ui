@@ -8,31 +8,27 @@ import "../shared/shape-avatar";
 import "../shared/shape-icon";
 import "../shared/state-info";
 import "../shared/state-item";
-import { MushroomBaseElement } from "./base-element";
-import { computeEntityPicture, computeInfoDisplay } from "./info";
+import { RoundedBaseElement } from "./base-element";
+import { computeInfoDisplay } from "./info";
 
 export function computeDarkMode(hass?: HomeAssistant): boolean {
     if (!hass) return false;
     return (hass.themes as any).darkMode as boolean;
 }
-export class MushroomBaseCard extends MushroomBaseElement {
+export class RoundedBaseCard extends RoundedBaseElement {
     protected renderPicture(picture: string): TemplateResult {
         return html`
-            <mushroom-shape-avatar
+            <rounded-shape-avatar
                 slot="icon"
                 .picture_url=${(this.hass as any).hassUrl(picture)}
-            ></mushroom-shape-avatar>
+            ></rounded-shape-avatar>
         `;
     }
 
     protected renderIcon(entity: HassEntity, icon: string): TemplateResult {
         const active = isActive(entity);
         return html`
-            <mushroom-shape-icon
-                slot="icon"
-                .disabled=${!active}
-                .icon=${icon}
-            ></mushroom-shape-icon>
+            <rounded-shape-icon slot="icon" .disabled=${!active} .icon=${icon}></rounded-shape-icon>
         `;
     }
 
@@ -40,11 +36,11 @@ export class MushroomBaseCard extends MushroomBaseElement {
         const unavailable = !isAvailable(entity);
         return unavailable
             ? html`
-                  <mushroom-badge-icon
+                  <rounded-badge-icon
                       class="unavailable"
                       slot="badge"
                       icon="mdi:help"
-                  ></mushroom-badge-icon>
+                  ></rounded-badge-icon>
               `
             : null;
     }
@@ -80,11 +76,11 @@ export class MushroomBaseCard extends MushroomBaseElement {
         );
 
         return html`
-            <mushroom-state-info
+            <rounded-state-info
                 slot="info"
                 .primary=${primary}
                 .secondary=${secondary}
-            ></mushroom-state-info>
+            ></rounded-state-info>
         `;
     }
 }

@@ -1,16 +1,16 @@
 import { ActionConfig } from "../../ha";
-import { MushAlignementSelector } from "./custom/ha-selector-mushroom-alignment";
-import { MushColorSelector } from "./custom/ha-selector-mushroom-color";
-import { MushIconTypeSelector } from "./custom/ha-selector-mushroom-icon-type";
-import { MushInfoSelector } from "./custom/ha-selector-mushroom-info";
-import { MushLayoutSelector } from "./custom/ha-selector-mushroom-layout";
+import { RoundedAlignementSelector } from "./custom/ha-selector-rounded-alignment";
+import { RoundedColorSelector } from "./custom/ha-selector-rounded-color";
+import { RoundedIconTypeSelector } from "./custom/ha-selector-rounded-icon-type";
+import { RoundedInfoSelector } from "./custom/ha-selector-rounded-info";
+import { RoundedLayoutSelector } from "./custom/ha-selector-rounded-layout";
 
-type MushSelector =
-    | MushColorSelector
-    | MushLayoutSelector
-    | MushInfoSelector
-    | MushIconTypeSelector
-    | MushAlignementSelector;
+type RoundedSelector =
+    | RoundedColorSelector
+    | RoundedLayoutSelector
+    | RoundedInfoSelector
+    | RoundedIconTypeSelector
+    | RoundedAlignementSelector;
 
 export type Selector =
     | ActionSelector
@@ -37,7 +37,7 @@ export type Selector =
     | ThemeSelector
     | TimeSelector
     | UiActionSelector
-    | MushSelector;
+    | RoundedSelector;
 
 export interface ActionSelector {
     // eslint-disable-next-line @typescript-eslint/ban-types

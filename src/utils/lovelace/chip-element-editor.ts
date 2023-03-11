@@ -1,11 +1,11 @@
 import { customElement } from "lit/decorators.js";
 import { computeChipComponentName } from "./chip/chip-element";
 import { LovelaceChipConfig } from "./chip/types";
-import { MushroomElementEditor } from "./element-editor";
+import { RoundedElementEditor } from "./element-editor";
 import { LovelaceChipEditor } from "./types";
 
-@customElement("mushroom-chip-element-editor")
-export class MushroomChipElementEditor extends MushroomElementEditor<LovelaceChipConfig> {
+@customElement("rounded-chip-element-editor")
+export class RoundedChipElementEditor extends RoundedElementEditor<LovelaceChipConfig> {
     protected get configElementType(): string | undefined {
         return this.value?.type;
     }

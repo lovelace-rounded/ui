@@ -3,7 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { Appearance } from "./config/appearance-config";
 
-@customElement("mushroom-card")
+@customElement("rounded-card")
 export class Card extends LitElement {
     @property() public appearance?: Appearance;
 
@@ -44,10 +44,10 @@ export class Card extends LitElement {
                 flex: 1;
                 min-width: 0;
             }
-            .container.no-info > ::slotted(mushroom-state-item) {
+            .container.no-info > ::slotted(rounded-state-item) {
                 flex: none;
             }
-            .container.no-info.no-icon > ::slotted(mushroom-state-item) {
+            .container.no-info.no-icon > ::slotted(rounded-state-item) {
                 margin-right: 0;
                 margin-left: 0;
                 margin-bottom: 0;

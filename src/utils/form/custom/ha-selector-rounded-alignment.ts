@@ -3,15 +3,15 @@ import { customElement, property } from "lit/decorators.js";
 import { fireEvent, HomeAssistant } from "../../../ha";
 import "../../../shared/editor/alignment-picker";
 
-export type MushAlignementSelector = {
+export type RoundedAlignementSelector = {
     "mush-alignment": {};
 };
 
 @customElement("ha-selector-mush-alignment")
-export class HaMushAlignmentSelector extends LitElement {
+export class HaRoundedAlignmentSelector extends LitElement {
     @property() public hass!: HomeAssistant;
 
-    @property() public selector!: MushAlignementSelector;
+    @property() public selector!: RoundedAlignementSelector;
 
     @property() public value?: string;
 
@@ -19,12 +19,12 @@ export class HaMushAlignmentSelector extends LitElement {
 
     protected render() {
         return html`
-            <mushroom-alignment-picker
+            <rounded-alignment-picker
                 .hass=${this.hass}
                 .label=${this.label}
                 .value=${this.value}
                 @value-changed=${this._valueChanged}
-            ></mushroom-alignment-picker>
+            ></rounded-alignment-picker>
         `;
     }
 

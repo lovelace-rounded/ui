@@ -4,7 +4,7 @@ import { classMap } from "lit/directives/class-map.js";
 import { Appearance } from "./config/appearance-config";
 import "./shape-icon";
 
-@customElement("mushroom-state-item")
+@customElement("rounded-state-item")
 export class StateItem extends LitElement {
     @property() public appearance?: Appearance;
 

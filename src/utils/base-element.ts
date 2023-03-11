@@ -14,7 +14,7 @@ export function computeDarkMode(hass?: HomeAssistant): boolean {
     if (!hass) return false;
     return (hass.themes as any).darkMode as boolean;
 }
-export class MushroomBaseElement extends LitElement {
+export class RoundedBaseElement extends LitElement {
     @property({ attribute: false }) public hass!: HomeAssistant;
 
     protected updated(changedProps: PropertyValues): void {

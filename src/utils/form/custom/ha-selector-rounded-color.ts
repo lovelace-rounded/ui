@@ -3,15 +3,15 @@ import { customElement, property } from "lit/decorators.js";
 import { fireEvent, HomeAssistant } from "../../../ha";
 import "../../../shared/editor/color-picker";
 
-export type MushColorSelector = {
+export type RoundedColorSelector = {
     "mush-color": {};
 };
 
 @customElement("ha-selector-mush-color")
-export class HaMushColorSelector extends LitElement {
+export class HaRoundedColorSelector extends LitElement {
     @property() public hass!: HomeAssistant;
 
-    @property() public selector!: MushColorSelector;
+    @property() public selector!: RoundedColorSelector;
 
     @property() public value?: string;
 
@@ -19,12 +19,12 @@ export class HaMushColorSelector extends LitElement {
 
     protected render() {
         return html`
-            <mushroom-color-picker
+            <rounded-color-picker
                 .hass=${this.hass}
                 .label=${this.label}
                 .value=${this.value}
                 @value-changed=${this._valueChanged}
-            ></mushroom-color-picker>
+            ></rounded-color-picker>
         `;
     }
 

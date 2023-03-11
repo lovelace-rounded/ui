@@ -5,7 +5,7 @@ import setupCustomlocalize from "../../localize";
 import "./chip-element-editor";
 import { LovelaceChipConfig } from "./chip/types";
 import { GUIModeChangedEvent, SubElementEditorConfig } from "./editor/types";
-import type { MushroomElementEditor } from "./element-editor";
+import type { RoundedElementEditor } from "./element-editor";
 
 declare global {
     interface HASSDomEvents {
@@ -13,8 +13,8 @@ declare global {
     }
 }
 
-@customElement("mushroom-sub-element-editor")
-export class MushroomSubElementEditor extends LitElement {
+@customElement("rounded-sub-element-editor")
+export class RoundedSubElementEditor extends LitElement {
     public hass!: HomeAssistant;
 
     @property({ attribute: false }) public config!: SubElementEditorConfig;
@@ -24,7 +24,7 @@ export class MushroomSubElementEditor extends LitElement {
     @state() private _guiMode = true;
 
     @query(".editor")
-    private _editorElement?: MushroomElementEditor<LovelaceChipConfig>;
+    private _editorElement?: RoundedElementEditor<LovelaceChipConfig>;
 
     protected render(): TemplateResult {
         const customLocalize = setupCustomlocalize(this.hass);
@@ -56,13 +56,13 @@ export class MushroomSubElementEditor extends LitElement {
             </div>
             ${this.config.type === "chip"
                 ? html`
-                      <mushroom-chip-element-editor
+                      <rounded-chip-element-editor
                           class="editor"
                           .hass=${this.hass}
                           .value=${this.config.elementConfig}
                           @config-changed=${this._handleConfigChanged}
                           @GUImode-changed=${this._handleGUIModeChanged}
-                      ></mushroom-chip-element-editor>
+                      ></rounded-chip-element-editor>
                   `
                 : ""}
         `;
@@ -109,6 +109,6 @@ export class MushroomSubElementEditor extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        "hui-sub-element-editor": MushroomSubElementEditor;
+        "hui-sub-element-editor": RoundedSubElementEditor;
     }
 }

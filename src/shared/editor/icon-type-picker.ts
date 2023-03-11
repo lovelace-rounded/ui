@@ -3,9 +3,9 @@ import { customElement, property } from "lit/decorators.js";
 import { HomeAssistant } from "../../ha";
 import setupCustomlocalize from "../../localize";
 import { ICON_TYPES } from "../../utils/info";
-import "../form/mushroom-select";
+import "../form/rounded-select";
 
-@customElement("mushroom-icon-type-picker")
+@customElement("rounded-icon-type-picker")
 export class IconTypePicker extends LitElement {
     @property() public label = "";
 
@@ -32,7 +32,7 @@ export class IconTypePicker extends LitElement {
         const customLocalize = setupCustomlocalize(this.hass);
 
         return html`
-            <mushroom-select
+            <rounded-select
                 .label=${this.label}
                 .configValue=${this.configValue}
                 @selected=${this._selectChanged}
@@ -52,13 +52,13 @@ export class IconTypePicker extends LitElement {
                         </mwc-list-item>
                     `;
                 })}
-            </mushroom-select>
+            </rounded-select>
         `;
     }
 
     static get styles(): CSSResultGroup {
         return css`
-            mushroom-select {
+            rounded-select {
                 width: 100%;
             }
         `;

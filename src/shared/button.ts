@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { property, customElement } from "lit/decorators.js";
 
-@customElement("mushroom-button")
+@customElement("rounded-button")
 export class Button extends LitElement {
     @property() public icon: string = "";
     @property() public title: string = "";

@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { property, customElement } from "lit/decorators.js";
 
-@customElement("mushroom-chip")
+@customElement("rounded-chip")
 export class Chip extends LitElement {
     @property() public icon: string = "";
 

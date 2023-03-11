@@ -9,7 +9,7 @@ import {
 import { ConditionalChipConfig, LovelaceChip } from "../lovelace/chip/types";
 import { ConditionalCardConfig } from "../lovelace/types";
 
-@customElement("mushroom-conditional-base")
+@customElement("rounded-conditional-base")
 export class ConditionalBase extends ReactiveElement {
     @property({ attribute: false }) public hass?: HomeAssistant;
 
