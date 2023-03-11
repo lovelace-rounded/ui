@@ -7,7 +7,12 @@
         "url": "https://lovelace-rounded.github.io",
         "cards": "docs/cards"
     },
+    "scripts": {
+        "build": "rollup -c rollup.config.mjs --bundleConfigAsCjs",
+        "dev": "rollup -w -c rollup.config.mjs --bundleConfigAsCjs"
+    },
     "dependencies": {
+        "@material/mwc-ripple": "^0.27.0",
         "lit": "2.6.1",
         "superstruct": "1.0.3",
         "memoize-one": "6.0.0",

@@ -35,10 +35,10 @@
         ],
     },
     "include": [
-        "src/**/*",
-        "homeassistant-frontend/src/**/*"
+        "src/**/*.ts",
+        "homeassistant-frontend/src/**/*.ts"
     ],
     "exclude": [
-        "node_modules/**"
+        "node_modules"
     ]
 }
