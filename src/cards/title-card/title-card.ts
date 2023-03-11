@@ -1,11 +1,19 @@
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
-import { CSSResultGroup, html, nothing, css } from "lit";
+import { CSSResultGroup, html, nothing, css, PropertyValues } from "lit";
 import { customElement, state } from "lit/decorators";
 import { TITLE_CARD_EDITOR_NAME, TITLE_CARD_NAME } from "./const";
 import { TitleCardConfig } from "./title-card-config";
 import { RenderTemplateResult, subscribeRenderTemplate } from "../../ha/data/ws-templates";
 import { registerCustomCard } from "../../utils/custom-cards";
-import { HomeAssistant, LovelaceCard, LovelaceCardEditor } from "../../ha";
+import {
+    actionHandler,
+    ActionHandlerEvent,
+    handleAction,
+    hasAction,
+    HomeAssistant,
+    LovelaceCard,
+    LovelaceCardEditor,
+} from "../../ha";
 import { RoundedBaseElement } from "../../utils/base-element";
 import { computeRgbColor } from "../../utils/colors";
 import { styleMap } from "lit/directives/style-map";
@@ -16,13 +24,18 @@ registerCustomCard({
     description: "Card with title and entity chip sub section",
 });
 
+const TEMPLATE_KEYS = ["title"] as const;
+type TemplateKey = typeof TEMPLATE_KEYS[number];
+
 @customElement(TITLE_CARD_NAME)
 export class TitleCard extends RoundedBaseElement implements LovelaceCard {
     @state() private _config?: TitleCardConfig;
 
-    @state() private _templateResult?: RenderTemplateResult;
+    @state() private _templateResults: Partial<
+        Record<TemplateKey, RenderTemplateResult | undefined>
+    > = {};
 
-    @state() private _unsubRenderTemplate?: Promise<UnsubscribeFunc>;
+    @state() private _unsubRenderTemplates: Map<TemplateKey, Promise<UnsubscribeFunc>> = new Map();
 
     public static async getConfigElement(): Promise<LovelaceCardEditor> {
         await import("./title-card-editor");
@@ -36,11 +49,17 @@ export class TitleCard extends RoundedBaseElement implements LovelaceCard {
         };
     }
 
-    public getCardSize(): number {
+    getCardSize(): number | Promise<number> {
         return 1;
     }
 
     public setConfig(config: TitleCardConfig): void {
+        TEMPLATE_KEYS.forEach((key) => {
+            if (this._config?.[key] !== config[key] || this._config?.entity != config.entity) {
+                this._tryDisconnectKey(key);
+            }
+        });
+
         this._config = {
             tap_action: {
                 action: "more-info",
@@ -61,51 +80,17 @@ export class TitleCard extends RoundedBaseElement implements LovelaceCard {
         this._tryDisconnect();
     }
 
-    private async _tryConnect(): Promise<void> {
-        if (this._unsubRenderTemplate !== undefined || !this.hass || !this._config) {
-            return;
-        }
-
-        try {
-            this._unsubRenderTemplate = subscribeRenderTemplate(
-                this.hass.connection,
-                (result) => {
-                    this._templateResult = result;
-                },
-                {
-                    template: this._config.title,
-                    variables: {
-                        config: this._config,
-                        user: this.hass.user!.name,
-                    },
-                    strict: true,
-                }
-            );
-        } catch (_err) {
-            this._templateResult = {
-                result: this._config!.title,
-                listeners: { all: false, domains: [], entities: [], time: false },
-            };
-            this._unsubRenderTemplate = undefined;
-        }
+    public isTemplate(key: TemplateKey) {
+        const value = this._config?.[key];
+        return value?.includes("{");
     }
 
-    private async _tryDisconnect(): Promise<void> {
-        if (!this._unsubRenderTemplate) {
-            return;
-        }
+    private getValue(key: TemplateKey) {
+        return this.isTemplate(key) ? this._templateResults[key]?.result : this._config?.[key];
+    }
 
-        try {
-            const unsub = await this._unsubRenderTemplate;
-            unsub();
-            this._unsubRenderTemplate = undefined;
-        } catch (err: any) {
-            if (err.code === "not_found") {
-                // If we get here, the connection was probably already closed. Ignore.
-            } else {
-                throw err;
-            }
-        }
+    private _handleAction(ev: ActionHandlerEvent) {
+        handleAction(this, this.hass!, this._config!, ev.detail.action!);
     }
 
     protected render() {
@@ -122,9 +107,106 @@ export class TitleCard extends RoundedBaseElement implements LovelaceCard {
             textStyle["--text-color"] = `var(--contract20)`;
         }
 
-        return html` <ha-card>
-            <h1 class="title" style=${styleMap(textStyle)}>${this._templateResult?.result}</h1>
+        const title = this.getValue("title");
+
+        return html` <ha-card
+            @action=${this._handleAction}
+            .actionHandler=${actionHandler({
+                hasHold: hasAction(this._config.hold_action),
+                hasDoubleClick: hasAction(this._config.double_tap_action),
+            })}
+        >
+            <h1 class="title" style=${styleMap(textStyle)}>${title}</h1>
         </ha-card>`;
+    }
+
+    protected updated(changedProps: PropertyValues): void {
+        super.updated(changedProps);
+        if (!this._config || !this.hass) {
+            return;
+        }
+
+        this._tryConnect();
+    }
+
+    private async _tryConnect(): Promise<void> {
+        TEMPLATE_KEYS.forEach((key) => {
+            this._tryConnectKey(key);
+        });
+    }
+
+    private async _tryConnectKey(key: TemplateKey): Promise<void> {
+        if (
+            this._unsubRenderTemplates.get(key) !== undefined ||
+            !this.hass ||
+            !this._config ||
+            !this.isTemplate(key)
+        ) {
+            return;
+        }
+
+        try {
+            const sub = subscribeRenderTemplate(
+                this.hass.connection,
+                (result) => {
+                    this._templateResults = {
+                        ...this._templateResults,
+                        [key]: result,
+                    };
+                },
+                {
+                    template: this._config[key] ?? "",
+                    entity_ids: this._config.entity_id,
+                    variables: {
+                        config: this._config,
+                        user: this.hass.user!.name,
+                        entity: this._config.entity,
+                    },
+                    strict: true,
+                }
+            );
+            this._unsubRenderTemplates.set(key, sub);
+            await sub;
+        } catch (_err) {
+            const result = {
+                result: this._config[key] ?? "",
+                listeners: {
+                    all: false,
+                    domains: [],
+                    entities: [],
+                    time: false,
+                },
+            };
+            this._templateResults = {
+                ...this._templateResults,
+                [key]: result,
+            };
+            this._unsubRenderTemplates.delete(key);
+        }
+    }
+    private async _tryDisconnect(): Promise<void> {
+        TEMPLATE_KEYS.forEach((key) => {
+            this._tryDisconnectKey(key);
+        });
+    }
+
+    private async _tryDisconnectKey(key: TemplateKey): Promise<void> {
+        const unsubRenderTemplate = this._unsubRenderTemplates.get(key);
+        if (!unsubRenderTemplate) {
+            return;
+        }
+
+        try {
+            const unsub = await unsubRenderTemplate;
+            unsub();
+            this._unsubRenderTemplates.delete(key);
+        } catch (err: any) {
+            if (err.code === "not_found" || err.code === "template_error") {
+                // If we get here, the connection was probably already closed. Ignore.
+            } else {
+                throw err;
+            }
+        }
     }
 
     static get styles(): CSSResultGroup {
@@ -140,9 +222,9 @@ export class TitleCard extends RoundedBaseElement implements LovelaceCard {
                     display: block;
                 }
 
-                div.title {
+                h1.title {
                     font-size: 32px;
-                    --text-color: rgb(var(--contract20));
+                    color: var(--text-color);
                 }
             `,
         ];
