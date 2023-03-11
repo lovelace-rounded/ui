@@ -6,6 +6,9 @@ build
 .task/
 dist/
 
+# Scripts
+!/scripts/*.sh
+
 # Hass Dev
 .hass_dev/*
 !.hass_dev/configuration.yaml

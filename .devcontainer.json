@@ -36,5 +36,5 @@
             }
         }
     },
-    "postCreateCommand": "task bootstrap"
+    "postCreateCommand": "bash scripts/bootstrap.sh"
 }
