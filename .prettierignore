@@ -4,3 +4,6 @@ node_modules/*
 # vscode
 .vscode/*
 !.vscode/extensions.json
+
+# hass dev
+.hass_dev/*

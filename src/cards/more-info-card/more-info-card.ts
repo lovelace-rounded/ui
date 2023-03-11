@@ -1,7 +1,6 @@
 import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { ActionHandlerEvent } from "../../../homeassistant-frontend/src/data/lovelace";
-import { actionHandler } from "../../../homeassistant-frontend/src/panels/lovelace/common/directives/action-handler-directive";
 import { handleAction } from "../../../homeassistant-frontend/src/panels/lovelace/common/handle-action";
 import {
   LovelaceCard,
@@ -64,9 +63,7 @@ export class MoreInfoCard extends LitElement implements LovelaceCard {
     }
 
     return html` <ha-card>
-      <div @action=${this._handleAction} .actionHandler=${actionHandler()}>
-        More information
-      </div>
+      <div @action=${this._handleAction}>More information</div>
     </ha-card>`;
   }
 
