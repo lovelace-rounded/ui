@@ -1,0 +1,52 @@
+{
+    "editor": {
+        "form": {
+            "color_picker": {
+                "values": {
+                    "default": "Default color"
+                }
+            },
+            "info_picker": {
+                "values": {
+                    "default": "Default information",
+                    "name": "Name",
+                    "state": "State",
+                    "last-changed": "Last Changed",
+                    "last-updated": "Last Updated",
+                    "none": "None"
+                }
+            },
+            "icon_type_picker": {
+                "values": {
+                    "default": "Default type",
+                    "icon": "Icon",
+                    "entity-picture": "Entity picture",
+                    "none": "None"
+                }
+            },
+            "alignment_picker": {
+                "values": {
+                    "default": "Default alignment",
+                    "start": "Start",
+                    "end": "End",
+                    "center": "Center",
+                    "justify": "Justify"
+                }
+            }
+        },
+        "card": {
+            "generic": {
+                "text_color": "Text color",
+                "background_color": "Background color",
+                "icon_color": "Icon color",
+                "primary_info": "Primary information",
+                "secondary_info": "Secondary information"
+            }
+        }
+    },
+    "card": {
+        "more-info": {
+            "text": "More information"
+        }
+    }
+}

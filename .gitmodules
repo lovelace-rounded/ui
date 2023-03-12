@@ -1,0 +1,4 @@
+[submodule "rounded-theme"]
+	path = rounded-theme
+	url = https://github.com/lovelace-rounded/theme
+	branch = main
