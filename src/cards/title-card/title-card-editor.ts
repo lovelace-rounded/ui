@@ -15,6 +15,28 @@ import { RoundedBaseElement } from "../../utils/base-element";
 const computeSchema = memoizeOne((localize: LocalizeFunc): HaFormSchema[] => [
     { name: "title", required: true, selector: { template: {} } },
     { name: "text_color", selector: { "rounded-color": {} } },
+    {
+        name: "",
+        type: "expandable",
+        title: localize(`editor.form.section.pill`),
+        icon: "mdi:pill",
+        schema: [
+            {
+                name: "entity",
+                selector: { entity: {} },
+            },
+            {
+                name: "text_color",
+                selector: { "rounded-color": {} },
+            },
+            {
+                name: "background_color",
+                selector: { "rounded-color": {} },
+            },
+            { name: "primary_info", selector: { "rounded-info": {} } },
+            { name: "icon", selector: { icon: {} } },
+        ],
+    },
     ...computeActionsFormSchema(localize),
 ]);
 

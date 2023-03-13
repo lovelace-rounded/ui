@@ -1,6 +1,10 @@
 {
     "editor": {
         "form": {
+            "section": {
+                "actions": "Actions",
+                "pill": "Pill"
+            },
             "color_picker": {
                 "values": {
                     "default": "Default color"

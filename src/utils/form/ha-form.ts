@@ -43,7 +43,7 @@ export interface HaFormGridSchema extends HaFormBaseSchema {
 
 export interface HaFormExpandableSchema extends HaFormBaseSchema {
     type: "expandable";
-    name: "";
+    name: string | "";
     title: string;
     icon?: string;
     // iconPath?: string;

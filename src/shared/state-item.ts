@@ -13,7 +13,6 @@ export class StateItem extends LitElement {
             <div
                 class=${classMap({
                     container: true,
-                    vertical: this.appearance?.layout === "vertical",
                 })}
             >
                 ${this.appearance?.icon_type !== "none"
