@@ -3,7 +3,7 @@ import { html, nothing } from "lit";
 import { customElement, state } from "lit/decorators";
 import { TITLE_CARD_EDITOR_NAME } from "./const";
 import { TitleCardConfig, titleCardConfigStruct } from "./title-card-config";
-import { fireEvent, LovelaceCardEditor } from "../../ha";
+import { fireEvent, LocalizeFunc, LovelaceCardEditor } from "../../ha";
 import memoizeOne from "memoize-one";
 import { HaFormSchema } from "../../utils/form/ha-form";
 import setupCustomlocalize from "../../localize";
@@ -12,10 +12,10 @@ import { computeActionsFormSchema } from "../../shared/config/actions-config";
 import { loadHaComponents } from "../../utils/loader";
 import { RoundedBaseElement } from "../../utils/base-element";
 
-const computeSchema = memoizeOne((): HaFormSchema[] => [
+const computeSchema = memoizeOne((localize: LocalizeFunc): HaFormSchema[] => [
     { name: "title", required: true, selector: { template: {} } },
     { name: "text_color", selector: { "rounded-color": {} } },
-    ...computeActionsFormSchema(),
+    ...computeActionsFormSchema(localize),
 ]);
 
 @customElement(TITLE_CARD_EDITOR_NAME)
@@ -51,7 +51,7 @@ export class TitleCardEditor extends RoundedBaseElement implements LovelaceCardE
             return nothing;
         }
 
-        const schema = computeSchema();
+        const schema = computeSchema(this.hass!.localize);
 
         return html`<ha-form
             .hass=${this.hass}
