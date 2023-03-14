@@ -1,10 +1,6 @@
 {
     "editor": {
         "form": {
-            "section": {
-                "actions": "Actions",
-                "pill": "Pill"
-            },
             "color_picker": {
                 "values": {
                     "default": "Default color"
@@ -45,6 +41,9 @@
                 "icon_color": "Icon color",
                 "primary_info": "Primary information",
                 "secondary_info": "Secondary information"
+            },
+            "title-card": {
+                "pill": "Pill"
             }
         }
     },

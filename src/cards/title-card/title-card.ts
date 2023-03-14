@@ -46,7 +46,6 @@ export class TitleCard extends RoundedBaseElement implements LovelaceCard {
         return {
             type: `custom:${TITLE_CARD_NAME}`,
             title: "Hello, {{ user }} !",
-            pill: {},
         };
     }
 
