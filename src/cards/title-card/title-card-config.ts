@@ -1,6 +1,7 @@
 import { assign, object, optional, string } from "superstruct";
 import { LovelaceCardConfig } from "../../ha";
 import { ActionsSharedConfig, actionsSharedConfigStruct } from "../../shared/config/actions-config";
+import { EntitySharedConfig } from "../../shared/config/entity-config";
 import { lovelaceCardConfigStruct } from "../../shared/config/lovelace-card-config";
 import { Info } from "../../utils/info";
 
@@ -26,3 +27,9 @@ export const titleCardConfigStruct = assign(
         icon: optional(string()),
     })
 );
+
+export type TitleCardPillConfig = EntitySharedConfig & {
+    text_color?: string;
+    background_color?: string;
+    primary_info?: Info;
+};

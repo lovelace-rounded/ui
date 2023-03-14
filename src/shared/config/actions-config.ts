@@ -22,7 +22,7 @@ export const computeActionsFormSchema = (
     {
         name: "",
         type: "expandable",
-        title: localize(`editor.form.section.actions`),
+        title: localize(`ui.panel.lovelace.editor.card.tile.actions`),
         icon: "mdi:gesture-tap",
         schema: [
             {
