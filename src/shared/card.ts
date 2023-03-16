@@ -12,7 +12,6 @@ export class Card extends LitElement {
             <div
                 class=${classMap({
                     container: true,
-                    horizontal: this.appearance?.layout === "horizontal",
                     "no-info":
                         this.appearance?.primary_info === "none" &&
                         this.appearance?.secondary_info === "none",

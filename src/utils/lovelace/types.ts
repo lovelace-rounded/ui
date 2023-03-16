@@ -1,9 +1,4 @@
 import { Condition, HomeAssistant, LovelaceCardConfig, LovelaceConfig } from "../../ha";
-import { LovelaceChipConfig } from "./chip/types";
-
-export interface LovelaceChipEditor extends LovelaceGenericElementEditor {
-    setConfig(config: LovelaceChipConfig): void;
-}
 
 export interface LovelaceGenericElementEditor extends HTMLElement {
     hass?: HomeAssistant;

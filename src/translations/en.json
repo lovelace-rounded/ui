@@ -41,6 +41,9 @@
                 "icon_color": "Icon color",
                 "primary_info": "Primary information",
                 "secondary_info": "Secondary information"
+            },
+            "title-card": {
+                "pill": "Pill"
             }
         }
     },

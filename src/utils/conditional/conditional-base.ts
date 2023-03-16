@@ -6,7 +6,6 @@ import {
     LovelaceCard,
     validateConditionalConfig,
 } from "../../ha";
-import { ConditionalChipConfig, LovelaceChip } from "../lovelace/chip/types";
 import { ConditionalCardConfig } from "../lovelace/types";
 
 @customElement("rounded-conditional-base")
@@ -15,17 +14,17 @@ export class ConditionalBase extends ReactiveElement {
 
     @property() public editMode?: boolean;
 
-    @property() protected _config?: ConditionalCardConfig | ConditionalChipConfig;
+    @property() protected _config?: ConditionalCardConfig;
 
     @property({ type: Boolean, reflect: true }) public hidden = false;
 
-    protected _element?: LovelaceCard | LovelaceChip;
+    protected _element?: LovelaceCard;
 
     protected createRenderRoot() {
         return this;
     }
 
-    protected validateConfig(config: ConditionalCardConfig | ConditionalChipConfig): void {
+    protected validateConfig(config: ConditionalCardConfig): void {
         if (!config.conditions) {
             throw new Error("No conditions configured");
         }

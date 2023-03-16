@@ -1,5 +1,5 @@
 import { object, optional } from "superstruct";
-import { ActionConfig, actionConfigStruct } from "../../ha";
+import { ActionConfig, actionConfigStruct, LocalizeFunc } from "../../ha";
 import { HaFormSchema } from "../../utils/form/ha-form";
 import { UiAction } from "../../utils/form/ha-selector";
 
@@ -15,17 +15,28 @@ export type ActionsSharedConfig = {
     double_tap_action?: ActionConfig;
 };
 
-export const computeActionsFormSchema = (actions?: UiAction[]): HaFormSchema[] => [
+export const computeActionsFormSchema = (
+    localize: LocalizeFunc,
+    actions?: UiAction[]
+): HaFormSchema[] => [
     {
-        name: "tap_action",
-        selector: { "ui-action": { actions } },
-    },
-    {
-        name: "hold_action",
-        selector: { "ui-action": { actions } },
-    },
-    {
-        name: "double_tap_action",
-        selector: { "ui-action": { actions } },
+        name: "",
+        type: "expandable",
+        title: localize(`ui.panel.lovelace.editor.card.tile.actions`),
+        icon: "mdi:gesture-tap",
+        schema: [
+            {
+                name: "tap_action",
+                selector: { "ui-action": { actions } },
+            },
+            {
+                name: "hold_action",
+                selector: { "ui-action": { actions } },
+            },
+            {
+                name: "double_tap_action",
+                selector: { "ui-action": { actions } },
+            },
+        ],
     },
 ];

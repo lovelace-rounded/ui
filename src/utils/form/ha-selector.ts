@@ -3,11 +3,9 @@ import { RoundedAlignementSelector } from "./custom/ha-selector-rounded-alignmen
 import { RoundedColorSelector } from "./custom/ha-selector-rounded-color";
 import { RoundedIconTypeSelector } from "./custom/ha-selector-rounded-icon-type";
 import { RoundedInfoSelector } from "./custom/ha-selector-rounded-info";
-import { RoundedLayoutSelector } from "./custom/ha-selector-rounded-layout";
 
 type RoundedSelector =
     | RoundedColorSelector
-    | RoundedLayoutSelector
     | RoundedInfoSelector
     | RoundedIconTypeSelector
     | RoundedAlignementSelector;

@@ -2,21 +2,18 @@ import { html, nothing } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import memoizeOne from "memoize-one";
 import { assert } from "superstruct";
-import { fireEvent, LovelaceCardEditor } from "../../ha";
+import { fireEvent, LocalizeFunc, LovelaceCardEditor } from "../../ha";
 import setupCustomlocalize from "../../localize";
 import { computeActionsFormSchema } from "../../shared/config/actions-config";
 import { RoundedBaseElement } from "../../utils/base-element";
 import { GENERIC_LABELS } from "../../utils/form/generic-fields";
 import { HaFormSchema } from "../../utils/form/ha-form";
-import { UiAction } from "../../utils/form/ha-selector";
 import { MORE_INFO_CARD_EDITOR_NAME } from "./const";
 import { MoreInfoCardConfig, moreInfoCardConfigStruct } from "./more-info-card-config";
 
-const actions: UiAction[] = ["more-info", "navigate", "url", "call-service", "none"];
-
-const computeSchema = memoizeOne((): HaFormSchema[] => [
+const computeSchema = memoizeOne((localize: LocalizeFunc): HaFormSchema[] => [
     { name: "entity", selector: { entity: {} } },
-    ...computeActionsFormSchema(actions),
+    ...computeActionsFormSchema(localize),
 ]);
 
 @customElement(MORE_INFO_CARD_EDITOR_NAME)
@@ -46,7 +43,7 @@ export class MoreInfoCardEditor extends RoundedBaseElement implements LovelaceCa
             return nothing;
         }
 
-        const schema = computeSchema();
+        const schema = computeSchema(this.hass!.localize);
 
         return html` <ha-form
             .hass=${this.hass}

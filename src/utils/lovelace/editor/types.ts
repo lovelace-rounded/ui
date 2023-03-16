@@ -1,5 +1,4 @@
 import { ActionConfig, LovelaceCardConfig, LovelaceViewConfig, ShowViewConfig } from "../../../ha";
-import { LovelaceChipConfig } from "../chip/types";
 
 export interface YamlChangedEvent extends Event {
     detail: {
@@ -72,14 +71,4 @@ export interface HeaderFooter {
 
 export interface CardPickTarget extends EventTarget {
     config: LovelaceCardConfig;
-}
-
-export interface SubElementEditorConfig {
-    index?: number;
-    elementConfig?: LovelaceChipConfig;
-    type: string;
-}
-
-export interface EditSubElementEvent {
-    subElementConfig: SubElementEditorConfig;
 }

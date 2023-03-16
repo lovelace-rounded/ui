@@ -10,13 +10,12 @@ import {
     LovelaceCardConfig,
     LovelaceConfig,
 } from "../../ha";
-import { LovelaceChipConfig } from "./chip/types";
-import { EditSubElementEvent, GUIModeChangedEvent } from "./editor/types";
+import { GUIModeChangedEvent } from "./editor/types";
 import { GUISupportError } from "./gui-support-error";
 import { LovelaceGenericElementEditor } from "./types";
 
 export interface ConfigChangedEvent {
-    config: LovelaceCardConfig | LovelaceChipConfig;
+    config: LovelaceCardConfig;
     error?: string;
     guiModeAvailable?: boolean;
 }
@@ -26,13 +25,12 @@ declare global {
         // @ts-ignore
         "config-changed": ConfigChangedEvent;
         "GUImode-changed": GUIModeChangedEvent;
-        "edit-detail-element": EditSubElementEvent;
     }
 }
 
 export interface UIConfigChangedEvent extends Event {
     detail: {
-        config: LovelaceCardConfig | LovelaceChipConfig;
+        config: LovelaceCardConfig;
     };
 }
 
