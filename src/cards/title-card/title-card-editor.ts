@@ -11,8 +11,6 @@ import { GENERIC_LABELS } from "../../utils/form/generic-fields";
 import { computeActionsFormSchema } from "../../shared/config/actions-config";
 import { loadHaComponents } from "../../utils/loader";
 import { RoundedBaseElement } from "../../utils/base-element";
-import "./title-card-pill-editor";
-import { TitleCardPillConfig } from "./title-card-pill-config";
 
 const computeSchema = memoizeOne((localize: LocalizeFunc): HaFormSchema[] => [
     { name: "title", required: true, selector: { template: {} } },
@@ -48,25 +46,6 @@ export class TitleCardEditor extends RoundedBaseElement implements LovelaceCardE
         return this.hass!.localize(`ui.panel.lovelace.editor.card.generic.${schema.name}`);
     };
 
-    private _pillChanged(ev: CustomEvent) {
-        ev.stopPropagation();
-        if (!this._config || !this.hass) {
-            return;
-        }
-
-        const pill = ev.detail.pill as TitleCardPillConfig;
-        const config: TitleCardConfig = {
-            ...this._config,
-            pill,
-        };
-
-        if (pill == null) {
-            delete config.pill;
-        }
-
-        fireEvent(this, "config-changed", { config });
-    }
-
     protected render() {
         if (!this.hass || !this._config) {
             return nothing;
@@ -75,17 +54,11 @@ export class TitleCardEditor extends RoundedBaseElement implements LovelaceCardE
         const schema = computeSchema(this.hass!.localize);
 
         return html`<ha-form
-                .hass=${this.hass}
-                .data=${this._config}
-                .schema=${schema}
-                .computeLabel=${this._computeLabel}
-                @value-changed=${this._valueChanged}
-            ></ha-form>
-            <rounded-title-card-pill-editor
-                .hass=${this.hass}
-                .pill-config=${this._config!.pill}
-                @pill-changed=${this._pillChanged}
-            >
-            </rounded-title-card-pill-editor>`;
+            .hass=${this.hass}
+            .data=${this._config}
+            .schema=${schema}
+            .computeLabel=${this._computeLabel}
+            @value-changed=${this._valueChanged}
+        ></ha-form> `;
     }
 }
