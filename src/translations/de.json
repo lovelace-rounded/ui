@@ -1,0 +1,60 @@
+{
+    "editor": {
+        "form": {
+            "color_picker": {
+                "values": {
+                    "default": "Standard"
+                }
+            },
+            "info_picker": {
+                "values": {
+                    "default": "Standard",
+                    "name": "Name",
+                    "state": "Zustand",
+                    "last-changed": "Zuletzt geändert",
+                    "last-updated": "Zuletzt aktualisiert",
+                    "none": "Keine"
+                }
+            },
+            "icon_type_picker": {
+                "values": {
+                    "default": "Standard",
+                    "icon": "Symbol",
+                    "entity-picture": "Entity picture",
+                    "none": "Keine"
+                }
+            },
+            "alignment_picker": {
+                "values": {
+                    "default": "Standard",
+                    "start": "Anfang",
+                    "end": "Ende",
+                    "center": "Zentriert",
+                    "justify": "Ausrichten"
+                }
+            }
+        },
+        "card": {
+            "generic": {
+                "text_color": "Text Farbe",
+                "background_color": "Hintergrundfarbe",
+                "icon_color": "Symbol Farbe",
+                "primary_info": "Primäre Informationen",
+                "secondary_info": "Sekundäre Informationen"
+            },
+            "title-card": {
+                "pill": "Pille"
+            }
+        }
+    },
+    "card": {
+        "title": {
+            "name": "Rounded - Titel Karte"
+        },
+        "more-info": {
+            "name": "Rounded - Zusatzinformationen Karte",
+            "description": "Öffnet das Fenster für Zusatzinformationen",
+            "text": "Mehr Informationen"
+        }
+    }
+}

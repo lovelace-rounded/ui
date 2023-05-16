@@ -17,15 +17,16 @@ import {
 import { RoundedBaseElement } from "../../utils/base-element";
 import { computeRgbColor } from "../../utils/colors";
 import { styleMap } from "lit/directives/style-map";
+import { localize } from "../../localize";
 
 registerCustomCard({
-    name: "Rounded title card",
+    name: localize(`card.title.name`),
     type: TITLE_CARD_NAME,
-    description: "Card with title and entity chip sub section",
+    description: localize(`card.title.description`),
 });
 
 const TEMPLATE_KEYS = ["title"] as const;
-type TemplateKey = typeof TEMPLATE_KEYS[number];
+type TemplateKey = (typeof TEMPLATE_KEYS)[number];
 
 @customElement(TITLE_CARD_NAME)
 export class TitleCard extends RoundedBaseElement implements LovelaceCard {

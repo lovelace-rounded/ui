@@ -1,8 +1,10 @@
 import { HomeAssistant } from "./ha";
+import * as de from "./translations/de.json";
 import * as en from "./translations/en.json";
 import * as fr from "./translations/fr.json";
 
 const languages: Record<string, unknown> = {
+    de,
     en,
     fr,
 };
@@ -17,6 +19,16 @@ function getTranslatedString(key: string, lang: string): string | undefined {
     } catch (_) {
         return undefined;
     }
+}
+
+export function localize(key: string): string {
+    const lang = (localStorage.getItem("selectedLanguage") || "en")
+        .replace(/['"]+/g, "")
+        .replace("-", "_");
+
+    let translated = getTranslatedString(key, lang);
+    if (!translated) translated = getTranslatedString(key, DEFAULT_LANG);
+    return translated ?? key;
 }
 
 export default function setupCustomlocalize(hass?: HomeAssistant) {
