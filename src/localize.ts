@@ -1,8 +1,10 @@
 import { HomeAssistant } from "./ha";
+import * as de from "./translations/de.json";
 import * as en from "./translations/en.json";
 import * as fr from "./translations/fr.json";
 
 const languages: Record<string, unknown> = {
+    de,
     en,
     fr,
 };
