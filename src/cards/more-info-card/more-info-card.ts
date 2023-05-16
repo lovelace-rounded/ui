@@ -9,16 +9,16 @@ import {
     LovelaceCard,
     LovelaceCardEditor,
 } from "../../ha";
-import setupCustomlocalize from "../../localize";
 import { RoundedBaseElement } from "../../utils/base-element";
 import { registerCustomCard } from "../../utils/custom-cards";
 import { MORE_INFO_CARD_EDITOR_NAME, MORE_INFO_CARD_NAME } from "./const";
 import { MoreInfoCardConfig } from "./more-info-card-config";
+import setupCustomlocalize, { localize } from "../../localize";
 
 registerCustomCard({
-    name: "Rounded more info card",
+    name: localize(`card.more-info.name`),
     type: MORE_INFO_CARD_NAME,
-    description: "Open more info modal window of a specified entity",
+    description: localize(`card.more-info.description`),
 });
 
 @customElement(MORE_INFO_CARD_NAME)

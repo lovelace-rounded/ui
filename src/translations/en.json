@@ -48,7 +48,13 @@
         }
     },
     "card": {
+        "title": {
+            "name": "Rounded title card",
+            "description": "Card with title and entity chip sub section"
+        },
         "more-info": {
+            "name": "Rounded more info card",
+            "description": "Open more info modal window of a specified entity",
             "text": "More information"
         }
     }
